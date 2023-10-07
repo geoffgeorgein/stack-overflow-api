@@ -20,6 +20,20 @@ mongoose.connect(process.env.CONNECTION_URL)
 
 const PORT = process.env.PORT || 5000;
 
+app.use((req, res, next) => {
+  const corsWhitelist = [
+      'https://stack-overflow-clone-fsz7pi7e7-geoffgeorgein.vercel.app',
+      'http://127.0.0.1:5173',
+      
+  ];
+  if (corsWhitelist.indexOf(req.headers.origin) !== -1) {
+      res.header('Access-Control-Allow-Origin', req.headers.origin);
+      res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  }
+
+  next();
+});
+
 app.get('/',(req,res)=>{
     res.json('hello world1')
 })
